@@ -2,7 +2,7 @@
   <div class="w-100">
 
     <!-- Header -->
-    <header class="row d-flex align-items-center mb-4 mt-1">
+    <header class="row d-flex align-items-center justify-content-center mb-4 mt-1">
       <h1 class="">Ableton Viewer (Vue)</h1>
       <!-- Choose a different file button -->
       <div v-if="file.isValid"
@@ -14,7 +14,7 @@
 
     <!-- File input dialogue -->
     <div v-if="!file.isBeingProcessed && !file.isValid"
-         class="row input-group mb-3">
+         class="row input-group mb-4">
       <div class="input-group-prepend">
         <span class="input-group-text">Select an .als file</span>
       </div>
@@ -50,7 +50,7 @@
 
     <!-- JSON representation of project -->
     <div v-if="file.isValid"
-         class="border-top bg-light rounded p-4 w-100 shadow d-flex justify-content-center">
+         class="border-top bg-white rounded p-4 w-100 mt-4 shadow d-flex justify-content-center">
       <button v-if="!file.showJSON"
               @click="file.showJSON = true"
               class="btn btn-warning">Show JSON (this could be very big)</button>

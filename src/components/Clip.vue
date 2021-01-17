@@ -23,6 +23,8 @@ export default {
     mainStyle() {
       // console.log(this.length, this.start);
       return  {
+                display: "flex",
+                alignItems: "flex-end",
                 left: (this.start * this.magnifyFactor) + "px",
                 width: (this.length * this.magnifyFactor) + "px",
                 height: "100%",

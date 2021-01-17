@@ -1,7 +1,7 @@
 <template>
-  <span>
-    <span v-if="clips.length !== 0 && (type === 'Audio' || type === 'Midi')"
-          class="text-nowrap position-relative">
+  <div :style="[ layoutSettings.styles.trackHeight, layoutSettings.styles.trackPB, ]">
+    <div v-if="clips.length !== 0 && (type === 'Audio' || type === 'Midi')"
+          class="text-nowrap position-relative h-100">
       <!-- Go through all the clips -->
       <Clip v-for="clip in clips" :key="clip.id"
             :start="clip.currentStart"
@@ -10,12 +10,12 @@
             :name="clip.name"
             :colourIndex="clip.colourIndex" />
       _
-    </span>
+    </div>
     <!-- If there are no clips -->
       <span v-if="clips.length === 0">
         (empty)
       </span>
-  </span>
+  </div>
 </template>
 
 <script>
@@ -28,7 +28,7 @@ export default {
   props: {
     clips: Array,
     type: String,
-    layout: Object,
+    layoutSettings: Object,
   },
   data() {
     return {
