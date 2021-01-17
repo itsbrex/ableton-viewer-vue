@@ -56,7 +56,7 @@
               class="btn btn-warning">Show JSON (this could be very big)</button>
       <h2 v-if="file.showJSON">Project (JSON)</h2>
       <JSON v-if="file.showJSON"
-            :projectObject="projectObject" />
+            :abletonProject="abletonProject" />
     </div>
   </div>
 </template>
@@ -83,7 +83,7 @@ export default {
         acceptedFiles: ".als",
         url: "#",
       },
-      projectObject: null,
+      abletonProject: null,
       file: {
         isBeingProcessed: false,
         isValid: false,
@@ -101,28 +101,29 @@ export default {
         }
       };
 
-      project.creator = this.projectObject.Creator;
+      project.creator = this.abletonProject.Creator;
+      project.metaData = this.abletonProject.MetaData;
       
       project.tracks = [];
-      this.projectObject.LiveSet.Tracks.AudioTrack.forEach((track) => {
+      this.abletonProject.LiveSet.Tracks.AudioTrack.forEach((track) => {
         project.tracks.push({ id: track.Id,
                               name: track.Name.EffectiveName.Value,
                               type: "Audio",
         });
       });
-      this.projectObject.LiveSet.Tracks.MidiTrack.forEach((track) => {
+      this.abletonProject.LiveSet.Tracks.MidiTrack.forEach((track) => {
         project.tracks.push({ id: track.Id,
                               name: track.Name.EffectiveName.Value,
                               type: "Midi",
         });
       });
-      // this.projectObject.LiveSet.Tracks.GroupTrack.forEach((track) => {
+      // this.abletonProject.LiveSet.Tracks.GroupTrack.forEach((track) => {
       //   project.tracks.push({ id: track.Id,
       //                         name: track.Name.EffectiveName.Value,
       //                         type: "Group",
       //   });
       // });
-      // this.projectObject.LiveSet.Tracks.ReturnTrack.forEach((track) => {
+      // this.abletonProject.LiveSet.Tracks.ReturnTrack.forEach((track) => {
       //   project.tracks.push({ id: track.Id,
       //                         name: track.Name.EffectiveName.Value,
       //                         type: "Return",
@@ -160,12 +161,13 @@ export default {
             if(err){
                 return;
             }
-            this.projectObject = result.Ableton;
-            console.log("HERE:", this.projectObject);
+            this.abletonProject = result.Ableton;
+            this.abletonProject.MetaData = file;
+            console.log("HERE:", this.abletonProject);
           });
 
           // Make sure that all tracks are arrays
-          let liveSet = this.projectObject.LiveSet;
+          let liveSet = this.abletonProject.LiveSet;
           let tracks = liveSet.Tracks;
           if (typeof tracks.AudioTrack  === 'undefined') tracks.AudioTrack  = [];
           if (typeof tracks.MidiTrack   === 'undefined') tracks.MidiTrack   = [];
@@ -175,12 +177,12 @@ export default {
           if (!Array.isArray(tracks.MidiTrack))   tracks.MidiTrack   = [tracks.MidiTrack];
           if (!Array.isArray(tracks.ReturnTrack)) tracks.ReturnTrack = [tracks.ReturnTrack];
           if (!Array.isArray(tracks.GroupTrack))  tracks.GroupTrack  = [tracks.GroupTrack];
-          this.projectObject.LiveSet.Tracks = tracks;
+          this.abletonProject.LiveSet.Tracks = tracks;
 
           Vue.set(this.file, "isValid", true);
           Vue.set(this.file, "isBeingProcessed", false);
 
-          console.log("Ableton file:", this.projectObject);
+          console.log("Ableton file:", this.abletonProject);
       } catch (error) {
         Vue.set(this.file, "isValid", false);
         Vue.set(this.file, "isBeingProcessed", false);
