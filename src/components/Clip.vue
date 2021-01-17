@@ -1,24 +1,32 @@
 <template>
-  <div class="position-absolute bg-warning border-right text-truncate" :style="mainStyle">
+  <div class="position-absolute border-right text-truncate" :style="mainStyle">
     <small :style="smallStyle">{{ name }}</small>
   </div>
 </template>
 
 <script>
+import Colours from "./Colours.js";
+
 export default {
   props: {
     name: String,
     start: Number,
     length: Number,
     magnifyFactor: Number,
+    colourIndex: Number,
   },
   computed: {
+    colour () {
+      console.log(Colours.getColourByIndex(this.colourIndex));
+      return Colours.getColourByIndex(this.colourIndex);
+    },
     mainStyle() {
       // console.log(this.length, this.start);
       return  {
                 left: (this.start * this.magnifyFactor) + "px",
                 width: (this.length * this.magnifyFactor) + "px",
                 height: "100%",
+                backgroundColor: this.colour,
               };
     },
     smallStyle() {

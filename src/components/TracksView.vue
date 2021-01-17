@@ -35,7 +35,9 @@
           <tbody>
             <tr v-for="track in project.tracks" :key="track.id">
               <td>
-                <TrackName :name="track.name" :type="track.type" />
+                <TrackName :name="track.name"
+                           :type="track.type"
+                           :colourIndex="track.colourIndex"/>
               </td>
             </tr>
           </tbody>

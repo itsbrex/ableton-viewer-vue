@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="bgColour">
     <span>
       {{ name }}
     </span>
@@ -11,10 +11,18 @@
 </template>
 
 <script>
+import Colours from "./Colours.js";
+
 export default {
   props: {
     name: String,
     type: String,
+    colourIndex: Number,
+  },
+  data() {
+    return {
+      bgColour: { backgroundColor: Colours.getColourByIndex(this.colourIndex) },
+    }
   }
 };
 </script>

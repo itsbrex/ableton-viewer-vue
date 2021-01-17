@@ -7,7 +7,8 @@
             :start="clip.currentStart"
             :length="clip.currentEnd - clip.currentStart"
             :magnifyFactor="magnifyFactor"
-            :name="clip.name" />
+            :name="clip.name"
+            :colourIndex="clip.colourIndex" />
       _
     </span>
     <!-- If there are no clips -->
@@ -27,6 +28,7 @@ export default {
   props: {
     clips: Array,
     type: String,
+    layout: Object,
   },
   data() {
     return {

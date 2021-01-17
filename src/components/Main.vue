@@ -116,6 +116,7 @@ export default {
                             name: clip.Name.Value,
                             currentStart: parseFloat(clip.CurrentStart.Value),
                             currentEnd: parseFloat(clip.CurrentEnd.Value),
+                            colourIndex: parseFloat(clip.ColorIndex.Value),
             });
             if (parseFloat(clip.CurrentEnd.Value) > project.length) project.length = parseFloat(clip.CurrentEnd.Value);
           });
@@ -125,6 +126,7 @@ export default {
                               name: track.Name.EffectiveName.Value,
                               type: "Audio",
                               clips: newClips,
+                              colourIndex: parseFloat(track.ColorIndex.Value),
         });
       });
       this.abletonProject.LiveSet.Tracks.MidiTrack.forEach(track => {
@@ -136,6 +138,7 @@ export default {
                           name: clip.Name.Value,
                           currentStart: parseFloat(clip.CurrentStart.Value),
                           currentEnd: parseFloat(clip.CurrentEnd.Value),
+                          colourIndex: parseFloat(clip.ColorIndex.Value),
           });
           if (parseFloat(clip.CurrentEnd.Value) > project.length) project.length = parseFloat(clip.CurrentEnd.Value);
         });
@@ -144,6 +147,7 @@ export default {
                               name: track.Name.EffectiveName.Value,
                               type: "Midi",
                               clips: newClips,
+                              colourIndex: parseFloat(track.ColorIndex.Value),
         });
       });
       // this.abletonProject.LiveSet.Tracks.GroupTrack.forEach((track) => {
