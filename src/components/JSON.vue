@@ -1,6 +1,6 @@
 <template>
   <div class="w-100 mw-100 overflow-auto">
-    <json-viewer :value="projectObject"/>
+    <json-viewer :value="abletonProject"/>
   </div>
 </template>
 
@@ -13,11 +13,11 @@ export default {
     JsonViewer
   },
   props: {
-    projectObject: Object,
+    abletonProject: Object,
   },
   computed: {
     projectJSON() {
-      return JSON.stringify(this.projectObject);
+      return JSON.stringify(this.abletonProject);
     }
   }
 };

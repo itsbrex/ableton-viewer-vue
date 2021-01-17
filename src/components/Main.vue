@@ -45,7 +45,7 @@
     </div>
 
     <!-- Visual representation -->
-    <Tracks v-if="file.isValid"
+    <TracksView v-if="file.isValid"
             :project="relevantProperties" />
 
     <!-- JSON representation of project -->
@@ -56,7 +56,7 @@
               class="btn btn-warning">Show JSON (this could be very big)</button>
       <h2 v-if="file.showJSON">Project (JSON)</h2>
       <JSON v-if="file.showJSON"
-            :abletonProject="abletonProject" />
+            :abletonProject="new Object(abletonProject)" />
     </div>
   </div>
 </template>
@@ -66,13 +66,13 @@ import Zlib from 'zlib';
 import xml2js from 'xml2js';
 import Vue from "vue";
 import JSON from "./JSON.vue";
-import Tracks from "./Tracks.vue";
+import TracksView from "./TracksView.vue";
 
 export default {
   name: 'Main',
   components: {
     JSON,
-    Tracks,
+    TracksView,
   },
   props: {
     msg: String
@@ -96,25 +96,54 @@ export default {
     relevantProperties() {
       let project = {
         creator: "",
+        metaData: {},
         tracks: {
-          audioTracks: {},
-        }
+        },
+        length: 0,
       };
 
       project.creator = this.abletonProject.Creator;
       project.metaData = this.abletonProject.MetaData;
       
       project.tracks = [];
-      this.abletonProject.LiveSet.Tracks.AudioTrack.forEach((track) => {
+      this.abletonProject.LiveSet.Tracks.AudioTrack.forEach(track => {
+        const clips = track.DeviceChain.MainSequencer.Sample.ArrangerAutomation.Events.AudioClip;
+        let newClips = [];
+
+        if (clips !== undefined) {
+          clips.forEach(clip => {
+            newClips.push({ time: parseFloat(clip.Time),
+                            name: clip.Name.Value,
+                            currentStart: parseFloat(clip.CurrentStart.Value),
+                            currentEnd: parseFloat(clip.CurrentEnd.Value),
+            });
+            if (parseFloat(clip.CurrentEnd.Value) > project.length) project.length = parseFloat(clip.CurrentEnd.Value);
+          });
+        }
+
         project.tracks.push({ id: track.Id,
                               name: track.Name.EffectiveName.Value,
                               type: "Audio",
+                              clips: newClips,
         });
       });
-      this.abletonProject.LiveSet.Tracks.MidiTrack.forEach((track) => {
+      this.abletonProject.LiveSet.Tracks.MidiTrack.forEach(track => {
+        const clips = track.DeviceChain.MainSequencer.ClipTimeable.ArrangerAutomation.Events.MidiClip;
+        let newClips = [];
+
+        clips.forEach(clip => {
+          newClips.push({ time: parseFloat(clip.Time),
+                          name: clip.Name.Value,
+                          currentStart: parseFloat(clip.CurrentStart.Value),
+                          currentEnd: parseFloat(clip.CurrentEnd.Value),
+          });
+          if (parseFloat(clip.CurrentEnd.Value) > project.length) project.length = parseFloat(clip.CurrentEnd.Value);
+        });
+
         project.tracks.push({ id: track.Id,
                               name: track.Name.EffectiveName.Value,
                               type: "Midi",
+                              clips: newClips,
         });
       });
       // this.abletonProject.LiveSet.Tracks.GroupTrack.forEach((track) => {
@@ -135,7 +164,7 @@ export default {
       //   return a.id - b.id;
       // })
         
-      console.log(project);
+      console.log("Relevant properties: ", project);
 
       return project;
     },
@@ -156,15 +185,10 @@ export default {
 
         // Convert the XML to a javascript object
         let parser = new xml2js.Parser({mergeAttrs: true, explicitArray: false});
-        parser.parseString(xml,
-          (err, result) => {
-            if(err){
-                return;
-            }
-            this.abletonProject = result.Ableton;
-            this.abletonProject.MetaData = file;
-            console.log("HERE:", this.abletonProject);
-          });
+        parser.parseStringPromise(xml)
+        .then((result) => {
+          this.abletonProject = result.Ableton;
+          this.abletonProject.MetaData = file;
 
           // Make sure that all tracks are arrays
           let liveSet = this.abletonProject.LiveSet;
@@ -183,6 +207,7 @@ export default {
           Vue.set(this.file, "isBeingProcessed", false);
 
           console.log("Ableton file:", this.abletonProject);
+        });
       } catch (error) {
         Vue.set(this.file, "isValid", false);
         Vue.set(this.file, "isBeingProcessed", false);

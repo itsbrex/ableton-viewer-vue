@@ -6,9 +6,9 @@
       <span><strong>Created in:</strong> {{ project.creator }}</span>
     </div>
 
-    <div class="w-100 row pr-0">
+    <div class="w-100 row pr-0 align-items-start">
       <!-- Sequencer view -->
-      <div class="col d-flex flex-column justify-content-center pr-0">
+      <div class="col d-flex flex-column justify-content-center pr-0 overflow-auto">
         <table class="table table-striped border-right border-left border-bottom">
           <thead>
             <tr>
@@ -18,7 +18,7 @@
           <tbody>
             <tr v-for="track in project.tracks" :key="track.id">
               <td>
-                {{ track.id }}
+                <TrackArrangement :clips="track.clips" :type="track.type"/>
               </td>
             </tr>
           </tbody>
@@ -35,17 +35,7 @@
           <tbody>
             <tr v-for="track in project.tracks" :key="track.id">
               <td>
-                <span>
-                  {{ track.name }}
-                </span>
-                <span class="float-right">
-                  <span v-if="track.type === 'Midi'"
-                        class="fas fa-music">
-                  </span>
-                  <span v-if="track.type === 'Audio'"
-                        class="fas fa-microphone-alt">
-                  </span>
-                </span>
+                <TrackName :name="track.name" :type="track.type" />
               </td>
             </tr>
           </tbody>
@@ -56,10 +46,16 @@
 </template>
 
 <script>
-import "@fortawesome/fontawesome-free/css/all.css"
+import TrackName from "./TrackName.vue";
+import TrackArrangement from "./TrackArrangement.vue";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 export default {
-  name: "Tracks",
+  name: "TracksView",
+  components: {
+    TrackName,
+    TrackArrangement,
+  },
   props: {
     project: Object,
   },
