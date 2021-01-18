@@ -1,7 +1,7 @@
 <template>
-  <div :style="[ layoutSettings.styles.trackHeight, layoutSettings.styles.trackPB, ]"
-        class="">
-    <div :style="[ bgColour ]" class="h-100 p-2">
+  <div :style="{ height: layoutSettings.trackHeight + 'px', paddingBottom: layoutSettings.trackPB + 'px' }"
+        class="pl-0">
+    <div :style="{ backgroundColor: bgColour }" class="h-100 p-2">
       <span>
         {{ name }}
       </span>
@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      bgColour: { backgroundColor: Colours.getColourByIndex(this.colourIndex) },
+      bgColour: Colours.getColourByIndex(this.colourIndex),
     }
   }
 };

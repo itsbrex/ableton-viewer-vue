@@ -1,5 +1,5 @@
 <template>
-  <div class="position-absolute border-right text-truncate" :style="mainStyle">
+  <div class="position-absolute border-right text-truncate xx-hover" :style="mainStyle">
     <small :style="smallStyle">{{ name }}</small>
   </div>
 </template>
@@ -35,6 +35,7 @@ export default {
       return  {
                 fontSize: "6pt",
                 padding: "2px",
+                cursor: "default",
               };
     },
   }
@@ -42,5 +43,7 @@ export default {
 </script>
 
 <style>
-
+  .xx-hover:hover {
+    opacity: 0.7;
+  }
 </style>

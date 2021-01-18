@@ -1,5 +1,5 @@
 <template>
-  <div :style="[ layoutSettings.styles.trackHeight, layoutSettings.styles.trackPB, ]">
+  <div :style="{ height: layoutSettings.trackHeight + 'px', paddingBottom: layoutSettings.trackPB + 'px' }">
     <div v-if="clips.length !== 0 && (type === 'Audio' || type === 'Midi')"
           class="text-nowrap position-relative h-100">
       <!-- Go through all the clips -->
@@ -9,7 +9,7 @@
             :magnifyFactor="magnifyFactor"
             :name="clip.name"
             :colourIndex="clip.colourIndex" />
-      _
+      
     </div>
     <!-- If there are no clips -->
       <span v-if="clips.length === 0">
