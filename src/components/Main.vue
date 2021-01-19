@@ -108,9 +108,10 @@ export default {
       project.tracks = [];
       this.abletonProject.LiveSet.Tracks.AudioTrack.forEach(track => {
         const clips = track.DeviceChain.MainSequencer.Sample.ArrangerAutomation.Events.AudioClip;
+        // console.log("Audio Clips: ", clips);
         let newClips = [];
 
-        if (clips !== undefined) {
+        if (Array.isArray(clips)) {
           clips.forEach(clip => {
             newClips.push({ time: parseFloat(clip.Time),
                             name: clip.Name.Value,
@@ -119,6 +120,14 @@ export default {
                             colourIndex: parseFloat(clip.ColorIndex.Value),
             });
             if (parseFloat(clip.CurrentEnd.Value) > project.length) project.length = parseFloat(clip.CurrentEnd.Value);
+          });
+        } else if (typeof clips === "object") {
+          newClips.push({
+                            time: parseFloat(clips.Time),
+                            name: clips.Name.Value,
+                            currentStart: parseFloat(clips.CurrentStart.Value),
+                            currentEnd: parseFloat(clips.CurrentEnd.Value),
+                            colourIndex: parseFloat(clips.ColorIndex.Value),
           });
         }
 
@@ -131,17 +140,28 @@ export default {
       });
       this.abletonProject.LiveSet.Tracks.MidiTrack.forEach(track => {
         const clips = track.DeviceChain.MainSequencer.ClipTimeable.ArrangerAutomation.Events.MidiClip;
+        // console.log(clips);
         let newClips = [];
 
-        clips.forEach(clip => {
-          newClips.push({ time: parseFloat(clip.Time),
-                          name: clip.Name.Value,
-                          currentStart: parseFloat(clip.CurrentStart.Value),
-                          currentEnd: parseFloat(clip.CurrentEnd.Value),
-                          colourIndex: parseFloat(clip.ColorIndex.Value),
+        if (Array.isArray(clips)) {
+          clips.forEach(clip => {
+            newClips.push({ time: parseFloat(clip.Time),
+                            name: clip.Name.Value,
+                            currentStart: parseFloat(clip.CurrentStart.Value),
+                            currentEnd: parseFloat(clip.CurrentEnd.Value),
+                            colourIndex: parseFloat(clip.ColorIndex.Value),
+            });
+            if (parseFloat(clip.CurrentEnd.Value) > project.length) project.length = parseFloat(clip.CurrentEnd.Value);
           });
-          if (parseFloat(clip.CurrentEnd.Value) > project.length) project.length = parseFloat(clip.CurrentEnd.Value);
-        });
+        } else if (typeof clips === "object") {
+          newClips.push({
+                            time: parseFloat(clips.Time),
+                            name: clips.Name.Value,
+                            currentStart: parseFloat(clips.CurrentStart.Value),
+                            currentEnd: parseFloat(clips.CurrentEnd.Value),
+                            colourIndex: parseFloat(clips.ColorIndex.Value),
+          });
+        }
 
         project.tracks.push({ id: track.Id,
                               name: track.Name.EffectiveName.Value,
