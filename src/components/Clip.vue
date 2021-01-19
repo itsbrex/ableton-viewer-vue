@@ -1,6 +1,15 @@
 <template>
-  <div class="position-absolute border-right text-truncate xx-hover" :style="mainStyle">
-    <small :style="smallStyle">{{ name }}</small>
+  <div  class="position-absolute border-right xx-hover"
+        :style="mainStyle"
+        style="overflow: visible"
+        @mouseover="hover = true"
+        @mouseleave="hover = false">
+    <small class="w-100 text-truncate" :style="smallStyle">{{ name }}</small>
+    <div v-if="hover === true"
+         class="position-absolute bg-white"
+         style="pointer-events: none;">
+      {{ name }}
+    </div>
   </div>
 </template>
 
@@ -15,9 +24,14 @@ export default {
     magnifyFactor: Number,
     colourIndex: Number,
   },
+  data() {
+    return {
+      hover: false,
+    }
+  },
   computed: {
     colour () {
-      console.log(Colours.getColourByIndex(this.colourIndex));
+      // console.log(Colours.getColourByIndex(this.colourIndex));
       return Colours.getColourByIndex(this.colourIndex);
     },
     mainStyle() {
@@ -45,5 +59,6 @@ export default {
 <style>
   .xx-hover:hover {
     opacity: 0.7;
+    z-index: 1000;
   }
 </style>
