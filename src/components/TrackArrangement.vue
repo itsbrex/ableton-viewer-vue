@@ -12,8 +12,8 @@
       
     </div>
     <!-- If there are no clips -->
-      <span v-if="clips.length === 0">
-        (empty)
+      <span v-if="clips.length === 0" class="h-100 text-muted d-flex align-items-center pl-4">
+        (no clips)
       </span>
   </div>
 </template>

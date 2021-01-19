@@ -21,6 +21,7 @@
               <tr v-for="track in project.tracks" :key="track.id"
                   class="position-relative d-inline-block xx-lines-bg w-100"
                   :style="{ height: layoutSettings.trackHeight + 2 + 'px', paddingBottom: layoutSettings.trackPB + 'px' }">
+                  <!-- the above 2 is a magic number: it makes everything line up -->
                 <td class="w-100">
                 </td>
               </tr>
@@ -97,7 +98,7 @@ export default {
 <style scoped>
 .xx-lines-bg {
   z-index: 1;
-  pointer-events: none;
+  /* pointer-events: none; */
   overflow: hidden;
   border-bottom: 1px black dotted;
 }
