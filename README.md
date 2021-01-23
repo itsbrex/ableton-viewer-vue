@@ -11,6 +11,9 @@ Currently only supports Audio and Midi tracks (not Return or Group).
 
 Thanks to (https://github.com/WouterVanNifterick)[WouterVanNifterick] for starting.
 
+![Screenshot - clip arrangement](https://github.com/jpdh88/ableton-viewer-vue/blob/main/clip_arrangement.png)
+![Screenshot - JSON](https://github.com/jpdh88/ableton-viewer-vue/blob/main/json.png)
+
 ## Project setup
 ```
 npm install
