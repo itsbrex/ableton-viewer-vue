@@ -28,7 +28,7 @@
             </tbody>
             <!-- The tracks -->
             <tbody class="position-relative" style="z-index: 2">
-              <tr v-for="track in project.tracks" :key="track.id" class="">
+              <tr v-for="track in project.tracks" :key="track.id">
                 <td class="">
                   <TrackArrangement :clips="track.clips"
                                     :type="track.type"
