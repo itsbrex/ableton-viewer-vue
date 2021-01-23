@@ -7,6 +7,8 @@ Lets you:
 1. view the clip arrangement of a project
 2. view the .als in JSON format
 
+Currently only supports Audio and Midi tracks (not Return or Group).
+
 Thanks to (https://github.com/WouterVanNifterick)[WouterVanNifterick] for starting.
 
 ## Project setup
