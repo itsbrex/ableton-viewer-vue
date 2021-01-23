@@ -1,5 +1,5 @@
 <template>
-  <div  class="position-absolute border-right xx-hover"
+  <div  class="position-absolute border-right custom-hover"
         :style="mainStyle"
         style="overflow: visible"
         @mouseover="hover = true"
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style>
-  .xx-hover:hover {
+  .custom-hover:hover {
     opacity: 0.7;
     z-index: 1000;
   }

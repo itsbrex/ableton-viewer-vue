@@ -8,9 +8,9 @@
 
     <div class="d-flex pr-0 align-items-start">
       <!-- Sequencer view -->
-      <div class="col d-flex flex-column justify-content-center pl-0 pr-0 w-100 xx-arrangement-bg"
+      <div class="col d-flex flex-column justify-content-center pl-0 pr-0 w-100 custom-arrangement-bg"
            style="border-right: 1px solid black">
-        <h4 class="p-1 m-0 xx-arrangement-header-bg text-white"
+        <h4 class="p-1 m-0 custom-arrangement-header-bg text-white"
             style="border-bottom: 1px solid black"
             :style="{ height: layoutSettings.trackHeight + 'px' }">Arrangement</h4>
         <div class="overflow-auto border-right">
@@ -19,7 +19,7 @@
             <tbody class="position-absolute w-100"
                    style="z-index: 1;">
               <tr v-for="track in project.tracks" :key="track.id"
-                  class="position-relative d-inline-block xx-lines-bg w-100"
+                  class="position-relative d-inline-block custom-lines-bg w-100"
                   :style="{ height: layoutSettings.trackHeight + 2 + 'px', paddingBottom: layoutSettings.trackPB + 'px' }">
                   <!-- the above 2 is a magic number: it makes everything line up -->
                 <td class="w-100">
@@ -40,8 +40,8 @@
         </div>
       </div>
       <!-- Track Names -->
-      <div class="col-2 d-flex flex-column justify-content-center pr-0 pl-0 w-100 xx-names-bg">
-        <h4 class="p-1 m-0 xx-names-header-bg text-white"
+      <div class="col-2 d-flex flex-column justify-content-center pr-0 pl-0 w-100 custom-names-bg">
+        <h4 class="p-1 m-0 custom-names-header-bg text-white"
             style="border-bottom: 1px solid black"
             :style="{ height: layoutSettings.trackHeight + 'px' }"
             >Track name</h4>
@@ -96,22 +96,22 @@ export default {
 };
 </script>
 <style scoped>
-.xx-lines-bg {
+.custom-lines-bg {
   z-index: 1;
   /* pointer-events: none; */
   overflow: hidden;
   border-bottom: 1px black dotted;
 }
-.xx-names-header-bg {
+.custom-names-header-bg {
   background-color: rgba(0, 0, 0, 0.6);
 }
-.xx-names-bg {
+.custom-names-bg {
   background-color: rgba(0, 0, 0, 0.3);
 }
-.xx-arrangement-header-bg {
+.custom-arrangement-header-bg {
   background-color: rgba(0, 0, 0, 0.5);
 }
-.xx-arrangement-bg {
+.custom-arrangement-bg {
   background-color: rgba(0, 0, 0, 0.2);
 }
 </style>
