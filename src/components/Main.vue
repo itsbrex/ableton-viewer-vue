@@ -16,7 +16,7 @@
     <div v-if="!file.isBeingProcessed && !file.isValid"
          class="row input-group mb-4">
       <div class="input-group-prepend">
-        <span class="input-group-text">Select an .als file</span>
+        <span class="input-group-text">File:</span>
       </div>
       <div class="custom-file">
         <input
@@ -25,7 +25,7 @@
            class="custom-file-input"
            id="inputGroupFile01"
            aria-describedby="chooseFile">
-        <label class="custom-file-label" for="chooseFile">Choose file</label>
+        <label class="custom-file-label" for="chooseFile">Drop an .als file here, or click to browse</label>
       </div>
     </div>
 
